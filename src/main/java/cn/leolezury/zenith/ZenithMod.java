@@ -16,6 +16,7 @@ public class ZenithMod {
 		ZCreativeModeTabs.TABS.register(modBus);
 		ZEntityDataSerializers.ENTITY_DATA_SERIALIZERS.register(modBus);
 		ZEntityTypes.ENTITY_TYPES.register(modBus);
+		ZAttachmentTypes.ATTACHMENT_TYPES.register(modBus);
 	}
 
 	public static ResourceLocation id(String string) {

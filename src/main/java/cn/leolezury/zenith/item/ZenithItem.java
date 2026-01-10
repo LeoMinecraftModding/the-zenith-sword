@@ -24,7 +24,7 @@ public class ZenithItem extends Item {
 		return ItemAttributeModifiers.builder()
 			.add(
 				Attributes.ATTACK_DAMAGE,
-				new AttributeModifier(BASE_ATTACK_DAMAGE_ID, 9, AttributeModifier.Operation.ADD_VALUE),
+				new AttributeModifier(BASE_ATTACK_DAMAGE_ID, 7, AttributeModifier.Operation.ADD_VALUE),
 				EquipmentSlotGroup.MAINHAND
 			)
 			.build();

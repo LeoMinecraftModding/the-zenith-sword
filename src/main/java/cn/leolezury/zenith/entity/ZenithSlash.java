@@ -1,6 +1,7 @@
 package cn.leolezury.zenith.entity;
 
 import cn.leolezury.zenith.item.ZenithPart;
+import cn.leolezury.zenith.registry.ZAttachmentTypes;
 import cn.leolezury.zenith.registry.ZEntityDataSerializers;
 import cn.leolezury.zenith.util.ZMathUtil;
 import com.mojang.logging.LogUtils;
@@ -117,7 +118,7 @@ public class ZenithSlash extends Entity implements TraceableEntity {
 	private Entity owner;
 	private UUID ownerId;
 
-	private int damageCooldown;
+	private final List<Entity> damagedEntities = new ArrayList<>();
 
 	@Override
 	@Nullable
@@ -179,9 +180,6 @@ public class ZenithSlash extends Entity implements TraceableEntity {
 			if (owner != null) {
 				setPos(getIdealPos(owner, owner.position()));
 			}
-			if (damageCooldown > 0) {
-				damageCooldown--;
-			}
 			if (owner instanceof LivingEntity livingOwner) {
 				Vec3 endPos = ZMathUtil.rotationToPosition(position(), LENGTH, getPitch(), getYaw());
 				List<LivingEntity> entities = level().getEntitiesOfClass(LivingEntity.class, new AABB(position(), endPos).inflate(2));
@@ -197,7 +195,7 @@ public class ZenithSlash extends Entity implements TraceableEntity {
 					}
 				}
 				for (LivingEntity entity : result) {
-					if (entity != owner) {
+					if (entity != owner && !damagedEntities.contains(entity)) {
 						ItemStack weaponItem = livingOwner.getWeaponItem();
 						DamageSource damageSource = livingOwner instanceof Player player ? damageSources().playerAttack(player) : damageSources().mobAttack(livingOwner);
 						float damage = livingOwner.getAttribute(Attributes.ATTACK_DAMAGE) != null ? (float) (livingOwner.getAttributeValue(Attributes.ATTACK_DAMAGE)) : 1;
@@ -208,14 +206,14 @@ public class ZenithSlash extends Entity implements TraceableEntity {
 							knockback = EnchantmentHelper.modifyKnockback(serverLevel, weaponItem, entity, damageSource, knockback);
 						}
 
-						if (damageCooldown <= 0) {
-							entity.invulnerableTime = 0;
-							if (entity.hurt(damageSource, damage) && livingOwner.level() instanceof ServerLevel serverLevel) {
-								EnchantmentHelper.doPostAttackEffectsWithItemSource(serverLevel, entity, damageSource, weaponItem);
-								damageCooldown = 10;
-							}
-							entity.invulnerableTime = 0;
+						entity.invulnerableTime = 0;
+						livingOwner.setData(ZAttachmentTypes.ENSURED_ZENITH_DAMAGE.get(), damage * 0.3f);
+						if (entity.hurt(damageSource, damage) && livingOwner.level() instanceof ServerLevel serverLevel) {
+							EnchantmentHelper.doPostAttackEffectsWithItemSource(serverLevel, entity, damageSource, weaponItem);
+							damagedEntities.add(entity);
 						}
+						livingOwner.setData(ZAttachmentTypes.ENSURED_ZENITH_DAMAGE.get(), -1f);
+						entity.invulnerableTime = 0;
 
 						if (knockback > 0.0F) {
 							entity.knockback(knockback * 0.5F, Mth.sin(livingOwner.getYRot() * Mth.DEG_TO_RAD), -Mth.cos(livingOwner.getYRot() * Mth.DEG_TO_RAD));

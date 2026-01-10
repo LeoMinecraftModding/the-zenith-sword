@@ -1,7 +1,27 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_item": {
+    "has_dragon_breath": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:dragon_breath"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_nether_star": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:nether_star"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_netherite_sword": {
       "conditions": {
         "items": [
           {
@@ -21,7 +41,9 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_item"
+      "has_netherite_sword",
+      "has_nether_star",
+      "has_dragon_breath"
     ]
   ],
   "rewards": {
