@@ -1,22 +1,24 @@
 package cn.leolezury.zenith;
 
-import cn.leolezury.zenith.registry.*;
+import cn.leolezury.zenith.registry.ZCreativeModeTabs;
+import cn.leolezury.zenith.registry.ZEntityDataSerializers;
+import cn.leolezury.zenith.registry.ZEntityTypes;
+import cn.leolezury.zenith.registry.ZItems;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.common.Mod;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(ZenithMod.ID)
 public class ZenithMod {
 	public static final String ID = "zenith";
 
-	public ZenithMod(IEventBus modBus, ModContainer container) {
-		ZDataComponents.DATA_COMPONENTS.register(modBus);
+    public ZenithMod(FMLJavaModLoadingContext context) {
+        IEventBus modBus = context.getModEventBus();
 		ZItems.ITEMS.register(modBus);
 		ZCreativeModeTabs.TABS.register(modBus);
 		ZEntityDataSerializers.ENTITY_DATA_SERIALIZERS.register(modBus);
 		ZEntityTypes.ENTITY_TYPES.register(modBus);
-		ZAttachmentTypes.ATTACHMENT_TYPES.register(modBus);
 	}
 
 	public static ResourceLocation id(String string) {

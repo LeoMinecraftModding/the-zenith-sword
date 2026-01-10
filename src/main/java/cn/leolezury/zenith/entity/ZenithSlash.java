@@ -1,7 +1,6 @@
 package cn.leolezury.zenith.entity;
 
 import cn.leolezury.zenith.item.ZenithPart;
-import cn.leolezury.zenith.registry.ZAttachmentTypes;
 import cn.leolezury.zenith.registry.ZEntityDataSerializers;
 import cn.leolezury.zenith.util.ZMathUtil;
 import com.mojang.logging.LogUtils;
@@ -19,7 +18,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TraceableEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -36,6 +34,7 @@ import java.util.UUID;
 public class ZenithSlash extends Entity implements TraceableEntity {
 	private static final Logger LOGGER = LogUtils.getLogger();
 
+    public static final String TAG_ENSURED_ZENITH_DAMAGE = "ensured_zenith_damage";
 	private static final String TAG_ZENITH_PART = "zenith_part";
 	private static final String TAG_OWNER = "owner";
 	private static final String TAG_AGE = "age";
@@ -144,18 +143,18 @@ public class ZenithSlash extends Entity implements TraceableEntity {
 		this.setOwner(owner);
 		this.setPitch(-owner.getXRot());
 		this.setYaw(owner.yHeadRot + 90);
-		this.setRoll(getRandom().nextFloat() * 360);
+        this.setRoll(random.nextFloat() * 360);
 		this.setPos(getIdealPos(owner, owner.position()));
 	}
 
 	@Override
-	protected void defineSynchedData(SynchedEntityData.Builder builder) {
-		builder.define(ZENITH_PART, new ZenithPart(Items.WOODEN_SWORD.builtInRegistryHolder(), 0x594319, 0.125, Mth.HALF_PI * 0.5f, 1.75, 1))
-			.define(OWNER_ID, -1)
-			.define(AGE, 0)
-			.define(PITCH, 0f)
-			.define(YAW, 0f)
-			.define(ROLL, 0f);
+    protected void defineSynchedData() {
+        getEntityData().define(ZENITH_PART, new ZenithPart(Items.WOODEN_SWORD.builtInRegistryHolder(), 0x594319, 0.125, Mth.HALF_PI * 0.5f, 1.75, 1));
+        getEntityData().define(OWNER_ID, -1);
+        getEntityData().define(AGE, 0);
+        getEntityData().define(PITCH, 0f);
+        getEntityData().define(YAW, 0f);
+        getEntityData().define(ROLL, 0f);
 	}
 
 	@Override
@@ -163,7 +162,7 @@ public class ZenithSlash extends Entity implements TraceableEntity {
 		return PushReaction.IGNORE;
 	}
 
-	@Override
+    @Override
 	public void tick() {
 		super.tick();
 		if (!level().isClientSide) {
@@ -196,23 +195,28 @@ public class ZenithSlash extends Entity implements TraceableEntity {
 				}
 				for (LivingEntity entity : result) {
 					if (entity != owner && !damagedEntities.contains(entity)) {
-						ItemStack weaponItem = livingOwner.getWeaponItem();
 						DamageSource damageSource = livingOwner instanceof Player player ? damageSources().playerAttack(player) : damageSources().mobAttack(livingOwner);
 						float damage = livingOwner.getAttribute(Attributes.ATTACK_DAMAGE) != null ? (float) (livingOwner.getAttributeValue(Attributes.ATTACK_DAMAGE)) : 1;
-						float knockback = livingOwner.getKnockback(entity, damageSource);
+                        float knockback = (float) livingOwner.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
 
-						if (livingOwner.level() instanceof ServerLevel serverLevel) {
-							damage = EnchantmentHelper.modifyDamage(serverLevel, weaponItem, entity, damageSource, damage);
-							knockback = EnchantmentHelper.modifyKnockback(serverLevel, weaponItem, entity, damageSource, knockback);
-						}
+                        damage += EnchantmentHelper.getDamageBonus(livingOwner.getMainHandItem(), entity.getMobType());
+                        knockback += EnchantmentHelper.getKnockbackBonus(livingOwner);
+
+                        int fireAspect = EnchantmentHelper.getFireAspect(livingOwner);
+                        if (fireAspect > 0 && !entity.isOnFire()) {
+                            entity.setSecondsOnFire(1);
+                        }
 
 						entity.invulnerableTime = 0;
-						livingOwner.setData(ZAttachmentTypes.ENSURED_ZENITH_DAMAGE.get(), damage * 0.3f);
-						if (entity.hurt(damageSource, damage) && livingOwner.level() instanceof ServerLevel serverLevel) {
-							EnchantmentHelper.doPostAttackEffectsWithItemSource(serverLevel, entity, damageSource, weaponItem);
+                        livingOwner.getPersistentData().putFloat(TAG_ENSURED_ZENITH_DAMAGE, damage * 0.3f);
+                        if (entity.hurt(damageSource, damage)) {
+                            EnchantmentHelper.doPostHurtEffects(entity, this);
+                            if (fireAspect > 0) {
+                                entity.setSecondsOnFire(fireAspect * 4);
+                            }
 							damagedEntities.add(entity);
 						}
-						livingOwner.setData(ZAttachmentTypes.ENSURED_ZENITH_DAMAGE.get(), -1f);
+                        livingOwner.getPersistentData().putFloat(TAG_ENSURED_ZENITH_DAMAGE, -1f);
 						entity.invulnerableTime = 0;
 
 						if (knockback > 0.0F) {
@@ -281,7 +285,7 @@ public class ZenithSlash extends Entity implements TraceableEntity {
 
 	@Override
 	protected void addAdditionalSaveData(CompoundTag compoundTag) {
-		compoundTag.put(TAG_ZENITH_PART, ZenithPart.CODEC.encodeStart(NbtOps.INSTANCE, getZenithPart()).getOrThrow());
+        compoundTag.put(TAG_ZENITH_PART, ZenithPart.CODEC.encodeStart(NbtOps.INSTANCE, getZenithPart()).getOrThrow(false, LOGGER::warn));
 		if (owner != null) {
 			compoundTag.putUUID(TAG_OWNER, owner.getUUID());
 		}

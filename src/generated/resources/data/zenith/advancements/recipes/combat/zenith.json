@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:dragon_breath"
+            "items": [
+              "minecraft:dragon_breath"
+            ]
           }
         ]
       },
@@ -15,7 +17,9 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:nether_star"
+            "items": [
+              "minecraft:nether_star"
+            ]
           }
         ]
       },
@@ -25,7 +29,9 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:netherite_sword"
+            "items": [
+              "minecraft:netherite_sword"
+            ]
           }
         ]
       },
@@ -40,15 +46,16 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
       "has_netherite_sword",
       "has_nether_star",
-      "has_dragon_breath"
+      "has_dragon_breath",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "zenith:zenith"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

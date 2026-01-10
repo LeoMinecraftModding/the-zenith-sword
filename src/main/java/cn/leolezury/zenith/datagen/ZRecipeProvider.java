@@ -1,23 +1,22 @@
 package cn.leolezury.zenith.datagen;
 
 import cn.leolezury.zenith.registry.ZItems;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.Items;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 public class ZRecipeProvider extends RecipeProvider {
-	public ZRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-		super(output, registries);
+    public ZRecipeProvider(PackOutput output) {
+        super(output);
 	}
 
 	@Override
-	protected void buildRecipes(RecipeOutput recipeOutput) {
+    protected void buildRecipes(Consumer<FinishedRecipe> recipeOutput) {
 		ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, ZItems.ZENITH.get())
 			.requires(Items.WOODEN_SWORD)
 			.requires(Items.STONE_SWORD)

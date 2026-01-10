@@ -1,17 +1,25 @@
 package cn.leolezury.zenith.network;
 
 import cn.leolezury.zenith.ZenithMod;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 
-@EventBusSubscriber(modid = ZenithMod.ID)
+@Mod.EventBusSubscriber(modid = ZenithMod.ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ZNetworkHandler {
-	@SubscribeEvent
-	public static void onRegisterPayloadHandlersEvent(RegisterPayloadHandlersEvent event) {
-		final PayloadRegistrar registrar = event.registrar(ZenithMod.ID)
-			.optional();
-		registrar.playToServer(ZenithAttackPacket.TYPE, ZenithAttackPacket.STREAM_CODEC, (packet, context) -> context.enqueueWork(() -> ZenithAttackPacket.handle(packet, context.player())));
-	}
+    private static final String PROTOCOL_VERSION = "1";
+    public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
+            ZenithMod.id("main"),
+            () -> PROTOCOL_VERSION,
+            PROTOCOL_VERSION::equals,
+            PROTOCOL_VERSION::equals
+    );
+
+    @SubscribeEvent
+    public static void onNetworkSetup(FMLCommonSetupEvent event) {
+        int id = 0;
+        INSTANCE.registerMessage(id++, ZenithAttackPacket.class, ZenithAttackPacket::write, ZenithAttackPacket::read, ZenithAttackPacket::handle);
+    }
 }

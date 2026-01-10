@@ -19,14 +19,13 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Matrix4f;
 
 @OnlyIn(Dist.CLIENT)
@@ -107,10 +106,10 @@ public class ZenithSlashRenderer extends EntityRenderer<ZenithSlash> {
 				alpha *= 1 - (0.25f - startProgress) * 4;
 				nextAlpha *= 1 - (0.25f - startProgress) * 4;
 			}
-			consumer.addVertex(pose, innerPos.toVector3f()).setColor(FastColor.ARGB32.color(Math.round(alpha * 255), part.color())).setUv(0, 0).setOverlay(OverlayTexture.NO_OVERLAY).setLight(LightTexture.FULL_BRIGHT).setNormal(pose, 0, 1, 0);
-			consumer.addVertex(pose, outerPos.toVector3f()).setColor(FastColor.ARGB32.color(Math.round(alpha * 255), part.color())).setUv(0, 1).setOverlay(OverlayTexture.NO_OVERLAY).setLight(LightTexture.FULL_BRIGHT).setNormal(pose, 0, 1, 0);
-			consumer.addVertex(pose, nextOuterPos.toVector3f()).setColor(FastColor.ARGB32.color(Math.round(nextAlpha * 255), part.color())).setUv(1, 1).setOverlay(OverlayTexture.NO_OVERLAY).setLight(LightTexture.FULL_BRIGHT).setNormal(pose, 0, 1, 0);
-			consumer.addVertex(pose, nextInnerPos.toVector3f()).setColor(FastColor.ARGB32.color(Math.round(nextAlpha * 255), part.color())).setUv(1, 0).setOverlay(OverlayTexture.NO_OVERLAY).setLight(LightTexture.FULL_BRIGHT).setNormal(pose, 0, 1, 0);
+            consumer.vertex(pose.pose(), innerPos.toVector3f().x(), innerPos.toVector3f().y(), innerPos.toVector3f().z()).color(withAlpha(Math.round(alpha * 255), part.color())).uv(0, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).normal(pose.normal(), 0, 1, 0).endVertex();
+            consumer.vertex(pose.pose(), outerPos.toVector3f().x(), outerPos.toVector3f().y(), outerPos.toVector3f().z()).color(withAlpha(Math.round(alpha * 255), part.color())).uv(0, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).normal(pose.normal(), 0, 1, 0).endVertex();
+            consumer.vertex(pose.pose(), nextOuterPos.toVector3f().x(), nextOuterPos.toVector3f().y(), nextOuterPos.toVector3f().z()).color(withAlpha(Math.round(nextAlpha * 255), part.color())).uv(1, 1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).normal(pose.normal(), 0, 1, 0).endVertex();
+            consumer.vertex(pose.pose(), nextInnerPos.toVector3f().x(), nextInnerPos.toVector3f().y(), nextInnerPos.toVector3f().z()).color(withAlpha(Math.round(nextAlpha * 255), part.color())).uv(1, 0).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(LightTexture.FULL_BRIGHT).normal(pose.normal(), 0, 1, 0).endVertex();
 		}
 		float rotation = progress * Mth.TWO_PI;
 		Vec3 dir = new Vec3(Mth.sin(rotation) * ZenithSlash.RADIUS_RATIO, -Mth.cos(rotation), 0);
@@ -120,7 +119,7 @@ public class ZenithSlashRenderer extends EntityRenderer<ZenithSlash> {
 		BakedModel bakedModel = this.itemRenderer.getModel(itemStack, entity.level(), null, entity.getId());
 		poseStack.translate(itemPos.x, itemPos.y, itemPos.z);
 		poseStack.translate(0, -part.rotationCenterHeight(), 0);
-		poseStack.mulPose(new Matrix4f().translate(0, (float) part.rotationCenterHeight(), 0)
+        poseStack.mulPoseMatrix(new Matrix4f().translate(0, (float) part.rotationCenterHeight(), 0)
 			.scale((float) (part.scale() * centerProgress))
 			.rotate((float) Mth.atan2(dir.y, dir.x) - (float) part.rotation(), 0.0f, 0.0f, 1.0f)
 			.translate(0, (float) -part.rotationCenterHeight(), 0));
@@ -128,7 +127,11 @@ public class ZenithSlashRenderer extends EntityRenderer<ZenithSlash> {
 		poseStack.popPose();
 	}
 
-	@Override
+    private static int withAlpha(int alpha, int color) {
+        return alpha << 24 | color & 16777215;
+    }
+
+    @Override
 	public ResourceLocation getTextureLocation(ZenithSlash entity) {
 		return TextureAtlas.LOCATION_BLOCKS;
 	}

@@ -4,15 +4,15 @@ import cn.leolezury.zenith.ZenithMod;
 import cn.leolezury.zenith.item.ZenithItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ZItems {
-	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ZenithMod.ID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ZenithMod.ID);
 
-	public static final DeferredHolder<Item, ZenithItem> ZENITH = ITEMS.register("zenith", () ->
+    public static final RegistryObject<ZenithItem> ZENITH = ITEMS.register("zenith", () ->
 		new ZenithItem(new Item.Properties()
-			.component(ZDataComponents.ZENITH_PARTS.get(), ZenithItem.createZenithParts())
 			.rarity(Rarity.EPIC)
 			.stacksTo(1)));
 }

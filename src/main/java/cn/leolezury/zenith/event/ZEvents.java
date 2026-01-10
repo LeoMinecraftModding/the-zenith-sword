@@ -1,23 +1,23 @@
 package cn.leolezury.zenith.event;
 
 import cn.leolezury.zenith.ZenithMod;
-import cn.leolezury.zenith.registry.ZAttachmentTypes;
+import cn.leolezury.zenith.entity.ZenithSlash;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
-@EventBusSubscriber(modid = ZenithMod.ID)
+@Mod.EventBusSubscriber(modid = ZenithMod.ID)
 public class ZEvents {
 	@SubscribeEvent
-	private static void onPreLivingDamage(LivingDamageEvent.Pre event) {
+    public static void onLivingDamage(LivingDamageEvent event) {
 		DamageSource source = event.getSource();
 		Entity attacker = source.getEntity();
 		if (attacker != null) {
-			float ensuredDamage = attacker.getData(ZAttachmentTypes.ENSURED_ZENITH_DAMAGE.get());
-			if (ensuredDamage > 0 && event.getNewDamage() < ensuredDamage) {
-				event.setNewDamage(ensuredDamage);
+            float ensuredDamage = attacker.getPersistentData().getFloat(ZenithSlash.TAG_ENSURED_ZENITH_DAMAGE);
+            if (ensuredDamage > 0 && event.getAmount() < ensuredDamage) {
+                event.setAmount(ensuredDamage);
 			}
 		}
 	}
