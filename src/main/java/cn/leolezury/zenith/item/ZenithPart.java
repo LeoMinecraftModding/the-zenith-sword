@@ -9,6 +9,8 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Item;
 
+import java.util.List;
+
 public record ZenithPart(Holder<Item> item, int color, double rotationCenterHeight, double rotation, double scale, double trailWidth) {
 	public static final Codec<ZenithPart> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
 		BuiltInRegistries.ITEM.holderByNameCodec().fieldOf("item").forGetter(ZenithPart::item),
@@ -18,6 +20,8 @@ public record ZenithPart(Holder<Item> item, int color, double rotationCenterHeig
 		Codec.DOUBLE.fieldOf("scale").forGetter(ZenithPart::scale),
 		Codec.DOUBLE.fieldOf("trail_width").forGetter(ZenithPart::trailWidth)
 	).apply(instance, ZenithPart::new));
+
+	public static final Codec<List<ZenithPart>> LIST_CODEC = CODEC.listOf();
 
 	public static final StreamCodec<RegistryFriendlyByteBuf, ZenithPart> STREAM_CODEC = StreamCodec.composite(
 		ByteBufCodecs.fromCodec(BuiltInRegistries.ITEM.holderByNameCodec()), ZenithPart::item,
