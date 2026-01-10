@@ -12,7 +12,7 @@ public class ZItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ZenithMod.ID);
 
     public static final RegistryObject<ZenithItem> ZENITH = ITEMS.register("zenith", () ->
-		new ZenithItem(new Item.Properties()
-			.rarity(Rarity.EPIC)
-			.stacksTo(1)));
+            new ZenithItem(new Item.Properties()
+                    .rarity(Rarity.EPIC)
+                    .stacksTo(1)));
 }

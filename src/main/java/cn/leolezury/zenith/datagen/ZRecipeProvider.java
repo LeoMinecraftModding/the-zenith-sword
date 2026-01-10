@@ -13,23 +13,23 @@ import java.util.function.Consumer;
 public class ZRecipeProvider extends RecipeProvider {
     public ZRecipeProvider(PackOutput output) {
         super(output);
-	}
+    }
 
-	@Override
+    @Override
     protected void buildRecipes(Consumer<FinishedRecipe> recipeOutput) {
-		ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, ZItems.ZENITH.get())
-			.requires(Items.WOODEN_SWORD)
-			.requires(Items.STONE_SWORD)
-			.requires(Items.GOLDEN_SWORD)
-			.requires(Items.IRON_SWORD)
-			.requires(Items.DIAMOND_SWORD)
-			.requires(Items.NETHERITE_SWORD)
-			.requires(Items.HEART_OF_THE_SEA)
-			.requires(Items.NETHER_STAR)
-			.requires(Items.DRAGON_BREATH)
-			.unlockedBy(getHasName(Items.NETHERITE_SWORD), has(Items.NETHERITE_SWORD))
-			.unlockedBy(getHasName(Items.NETHER_STAR), has(Items.NETHER_STAR))
-			.unlockedBy(getHasName(Items.DRAGON_BREATH), has(Items.DRAGON_BREATH))
-			.save(recipeOutput);
-	}
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, ZItems.ZENITH.get())
+                .requires(Items.WOODEN_SWORD)
+                .requires(Items.STONE_SWORD)
+                .requires(Items.GOLDEN_SWORD)
+                .requires(Items.IRON_SWORD)
+                .requires(Items.DIAMOND_SWORD)
+                .requires(Items.NETHERITE_SWORD)
+                .requires(Items.HEART_OF_THE_SEA)
+                .requires(Items.NETHER_STAR)
+                .requires(Items.DRAGON_BREATH)
+                .unlockedBy(getHasName(Items.NETHERITE_SWORD), has(Items.NETHERITE_SWORD))
+                .unlockedBy(getHasName(Items.NETHER_STAR), has(Items.NETHER_STAR))
+                .unlockedBy(getHasName(Items.DRAGON_BREATH), has(Items.DRAGON_BREATH))
+                .save(recipeOutput);
+    }
 }

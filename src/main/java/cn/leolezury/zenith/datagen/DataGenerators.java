@@ -15,17 +15,17 @@ import java.util.concurrent.CompletableFuture;
 
 @Mod.EventBusSubscriber(modid = ZenithMod.ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
-	@SubscribeEvent
-	public static void onGatherData(GatherDataEvent event) {
-		DataGenerator generator = event.getGenerator();
-		PackOutput output = generator.getPackOutput();
-		CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
-		ExistingFileHelper helper = event.getExistingFileHelper();
+    @SubscribeEvent
+    public static void onGatherData(GatherDataEvent event) {
+        DataGenerator generator = event.getGenerator();
+        PackOutput output = generator.getPackOutput();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+        ExistingFileHelper helper = event.getExistingFileHelper();
 
-		ZBlockTagsProvider blockTags = new ZBlockTagsProvider(output, lookupProvider, helper);
-		generator.addProvider(event.includeServer(), blockTags);
-		generator.addProvider(event.includeServer(), new ZItemTagsProvider(output, lookupProvider, blockTags.contentsGetter(), helper));
+        ZBlockTagsProvider blockTags = new ZBlockTagsProvider(output, lookupProvider, helper);
+        generator.addProvider(event.includeServer(), blockTags);
+        generator.addProvider(event.includeServer(), new ZItemTagsProvider(output, lookupProvider, blockTags.contentsGetter(), helper));
 
         generator.addProvider(event.includeServer(), new ZRecipeProvider(output));
-	}
+    }
 }
