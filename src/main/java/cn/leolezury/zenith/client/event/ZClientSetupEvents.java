@@ -12,8 +12,8 @@ import net.minecraftforge.fml.common.Mod;
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = ZenithMod.ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ZClientSetupEvents {
-    @SubscribeEvent
-    public static void onRegisterEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(ZEntityTypes.ZENITH_SLASH.get(), ZenithSlashRenderer::new);
-    }
+	@SubscribeEvent
+	public static void onRegisterEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+		event.registerEntityRenderer(ZEntityTypes.ZENITH_SLASH.get(), ZenithSlashRenderer::new);
+	}
 }

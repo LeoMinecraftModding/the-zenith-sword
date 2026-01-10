@@ -9,12 +9,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ZEntityTypes {
-    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ZenithMod.ID);
+	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ZenithMod.ID);
 
-    public static final RegistryObject<EntityType<ZenithSlash>> ZENITH_SLASH = ENTITY_TYPES.register("zenith_slash", () -> EntityType.Builder
-            .<ZenithSlash>of(ZenithSlash::new, MobCategory.MISC)
-            .sized(0, 0)
-            .clientTrackingRange(10)
-            .updateInterval(1)
-            .build(ZenithMod.strId("zenith_slash")));
+	public static final RegistryObject<EntityType<ZenithSlash>> ZENITH_SLASH = ENTITY_TYPES.register("zenith_slash", () -> EntityType.Builder
+		.<ZenithSlash>of(ZenithSlash::new, MobCategory.MISC)
+		.sized(0, 0)
+		.clientTrackingRange(10)
+		.updateInterval(1)
+		.build(ZenithMod.strId("zenith_slash")));
 }

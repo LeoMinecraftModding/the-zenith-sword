@@ -15,20 +15,20 @@ import net.minecraftforge.fml.common.Mod;
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = ZenithMod.ID, value = Dist.CLIENT)
 public class ZClientEvents {
-    public static boolean isZenithAttacking() {
-        return Minecraft.getInstance().options.keyAttack.isDown() || Minecraft.getInstance().options.keyUse.isDown();
-    }
+	public static boolean isZenithAttacking() {
+		return Minecraft.getInstance().options.keyAttack.isDown() || Minecraft.getInstance().options.keyUse.isDown();
+	}
 
-    @SubscribeEvent
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
-            LocalPlayer player = Minecraft.getInstance().player;
-            if (isZenithAttacking()
-                    && player != null
-                    && player.getMainHandItem().is(ZItems.ZENITH.get())
-                    && !player.isUsingItem()) {
-                ZNetworkHandler.INSTANCE.sendToServer(new ZenithAttackPacket(player.getId()));
-            }
-        }
-    }
+	@SubscribeEvent
+	public static void onClientTick(TickEvent.ClientTickEvent event) {
+		if (event.phase == TickEvent.Phase.END) {
+			LocalPlayer player = Minecraft.getInstance().player;
+			if (isZenithAttacking()
+				&& player != null
+				&& player.getMainHandItem().is(ZItems.ZENITH.get())
+				&& !player.isUsingItem()) {
+				ZNetworkHandler.INSTANCE.sendToServer(new ZenithAttackPacket(player.getId()));
+			}
+		}
+	}
 }

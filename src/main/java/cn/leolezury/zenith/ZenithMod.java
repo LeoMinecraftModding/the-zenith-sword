@@ -11,21 +11,21 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(ZenithMod.ID)
 public class ZenithMod {
-    public static final String ID = "zenith";
+	public static final String ID = "zenith";
 
-    public ZenithMod(FMLJavaModLoadingContext context) {
-        IEventBus modBus = context.getModEventBus();
-        ZItems.ITEMS.register(modBus);
-        ZCreativeModeTabs.TABS.register(modBus);
-        ZEntityDataSerializers.ENTITY_DATA_SERIALIZERS.register(modBus);
-        ZEntityTypes.ENTITY_TYPES.register(modBus);
-    }
+	public ZenithMod(FMLJavaModLoadingContext context) {
+		IEventBus modBus = context.getModEventBus();
+		ZItems.ITEMS.register(modBus);
+		ZCreativeModeTabs.TABS.register(modBus);
+		ZEntityDataSerializers.ENTITY_DATA_SERIALIZERS.register(modBus);
+		ZEntityTypes.ENTITY_TYPES.register(modBus);
+	}
 
-    public static ResourceLocation id(String string) {
-        return ResourceLocation.fromNamespaceAndPath(ID, string);
-    }
+	public static ResourceLocation id(String string) {
+		return ResourceLocation.fromNamespaceAndPath(ID, string);
+	}
 
-    public static String strId(String string) {
-        return ID + ":" + string;
-    }
+	public static String strId(String string) {
+		return ID + ":" + string;
+	}
 }

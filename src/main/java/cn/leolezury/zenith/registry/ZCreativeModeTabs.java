@@ -8,10 +8,10 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ZCreativeModeTabs {
-    public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ZenithMod.ID);
+	public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ZenithMod.ID);
 
-    public static final RegistryObject<CreativeModeTab> ZENITH = TABS.register("zenith", () -> CreativeModeTab.builder()
-            .title(Component.translatable("name." + ZenithMod.ID))
-            .icon(() -> ZItems.ZENITH.get().getDefaultInstance())
-            .displayItems((params, output) -> ZItems.ITEMS.getEntries().forEach(item -> output.accept(item.get()))).build());
+	public static final RegistryObject<CreativeModeTab> ZENITH = TABS.register("zenith", () -> CreativeModeTab.builder()
+		.title(Component.translatable("name." + ZenithMod.ID))
+		.icon(() -> ZItems.ZENITH.get().getDefaultInstance())
+		.displayItems((params, output) -> ZItems.ITEMS.getEntries().forEach(item -> output.accept(item.get()))).build());
 }

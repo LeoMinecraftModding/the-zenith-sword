@@ -14,20 +14,20 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import java.util.concurrent.CompletableFuture;
 
 public class ZItemTagsProvider extends ItemTagsProvider {
-    public ZItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> future, CompletableFuture<TagLookup<Block>> provider, ExistingFileHelper helper) {
-        super(output, future, provider, ZenithMod.ID, helper);
-    }
+	public ZItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> future, CompletableFuture<TagLookup<Block>> provider, ExistingFileHelper helper) {
+		super(output, future, provider, ZenithMod.ID, helper);
+	}
 
-    @Override
-    protected void addTags(HolderLookup.Provider lookupProvider) {
-        tag(ItemTags.SWORDS)
-                .add(
-                        ZItems.ZENITH.get()
-                );
-    }
+	@Override
+	protected void addTags(HolderLookup.Provider lookupProvider) {
+		tag(ItemTags.SWORDS)
+			.add(
+				ZItems.ZENITH.get()
+			);
+	}
 
-    @Override
-    public IntrinsicTagAppender<Item> tag(TagKey<Item> tag) {
-        return super.tag(tag);
-    }
+	@Override
+	public IntrinsicTagAppender<Item> tag(TagKey<Item> tag) {
+		return super.tag(tag);
+	}
 }

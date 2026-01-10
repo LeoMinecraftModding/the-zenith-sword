@@ -9,10 +9,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ZItems {
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ZenithMod.ID);
+	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ZenithMod.ID);
 
-    public static final RegistryObject<ZenithItem> ZENITH = ITEMS.register("zenith", () ->
-            new ZenithItem(new Item.Properties()
-                    .rarity(Rarity.EPIC)
-                    .stacksTo(1)));
+	public static final RegistryObject<ZenithItem> ZENITH = ITEMS.register("zenith", () ->
+		new ZenithItem(new Item.Properties()
+			.rarity(Rarity.EPIC)
+			.stacksTo(1)));
 }

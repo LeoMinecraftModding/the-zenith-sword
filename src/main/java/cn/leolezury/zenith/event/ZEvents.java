@@ -10,15 +10,15 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = ZenithMod.ID)
 public class ZEvents {
-    @SubscribeEvent
-    public static void onLivingDamage(LivingDamageEvent event) {
-        DamageSource source = event.getSource();
-        Entity attacker = source.getEntity();
-        if (attacker != null) {
-            float ensuredDamage = attacker.getPersistentData().getFloat(ZenithSlash.TAG_ENSURED_ZENITH_DAMAGE);
-            if (ensuredDamage > 0 && event.getAmount() < ensuredDamage) {
-                event.setAmount(ensuredDamage);
-            }
-        }
-    }
+	@SubscribeEvent
+	public static void onLivingDamage(LivingDamageEvent event) {
+		DamageSource source = event.getSource();
+		Entity attacker = source.getEntity();
+		if (attacker != null) {
+			float ensuredDamage = attacker.getPersistentData().getFloat(ZenithSlash.TAG_ENSURED_ZENITH_DAMAGE);
+			if (ensuredDamage > 0 && event.getAmount() < ensuredDamage) {
+				event.setAmount(ensuredDamage);
+			}
+		}
+	}
 }

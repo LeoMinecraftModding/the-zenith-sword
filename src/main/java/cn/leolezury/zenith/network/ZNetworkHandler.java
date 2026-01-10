@@ -9,17 +9,17 @@ import net.minecraftforge.network.simple.SimpleChannel;
 
 @Mod.EventBusSubscriber(modid = ZenithMod.ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ZNetworkHandler {
-    private static final String PROTOCOL_VERSION = "1";
-    public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
-            ZenithMod.id("main"),
-            () -> PROTOCOL_VERSION,
-            PROTOCOL_VERSION::equals,
-            PROTOCOL_VERSION::equals
-    );
+	private static final String PROTOCOL_VERSION = "1";
+	public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
+		ZenithMod.id("main"),
+		() -> PROTOCOL_VERSION,
+		PROTOCOL_VERSION::equals,
+		PROTOCOL_VERSION::equals
+	);
 
-    @SubscribeEvent
-    public static void onNetworkSetup(FMLCommonSetupEvent event) {
-        int id = 0;
-        INSTANCE.registerMessage(id++, ZenithAttackPacket.class, ZenithAttackPacket::write, ZenithAttackPacket::read, ZenithAttackPacket::handle);
-    }
+	@SubscribeEvent
+	public static void onNetworkSetup(FMLCommonSetupEvent event) {
+		int id = 0;
+		INSTANCE.registerMessage(id++, ZenithAttackPacket.class, ZenithAttackPacket::write, ZenithAttackPacket::read, ZenithAttackPacket::handle);
+	}
 }
