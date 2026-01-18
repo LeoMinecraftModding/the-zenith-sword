@@ -34,7 +34,6 @@ import java.util.UUID;
 public class ZenithSlash extends Entity implements TraceableEntity {
 	private static final Logger LOGGER = LogUtils.getLogger();
 
-	public static final String TAG_ENSURED_ZENITH_DAMAGE = "ensured_zenith_damage";
 	private static final String TAG_ZENITH_PART = "zenith_part";
 	private static final String TAG_OWNER = "owner";
 	private static final String TAG_AGE = "age";
@@ -208,7 +207,9 @@ public class ZenithSlash extends Entity implements TraceableEntity {
 						}
 
 						entity.invulnerableTime = 0;
-						livingOwner.getPersistentData().putFloat(TAG_ENSURED_ZENITH_DAMAGE, damage * 0.3f);
+						if (livingOwner instanceof ZenithOwner zenithOwner) {
+							zenithOwner.setEnsuredZenithDamage(damage * 0.3f);
+						}
 						if (entity.hurt(damageSource, damage)) {
 							EnchantmentHelper.doPostHurtEffects(entity, this);
 							if (fireAspect > 0) {
@@ -216,7 +217,9 @@ public class ZenithSlash extends Entity implements TraceableEntity {
 							}
 							damagedEntities.add(entity);
 						}
-						livingOwner.getPersistentData().putFloat(TAG_ENSURED_ZENITH_DAMAGE, -1f);
+						if (livingOwner instanceof ZenithOwner zenithOwner) {
+							zenithOwner.setEnsuredZenithDamage(-1);
+						}
 						entity.invulnerableTime = 0;
 
 						if (knockback > 0.0F) {
