@@ -15,4 +15,10 @@ public class ZItems {
 			.component(ZDataComponents.ZENITH_PARTS.get(), ZenithItem.createZenithParts())
 			.rarity(Rarity.EPIC)
 			.stacksTo(1)));
+
+	public static final DeferredHolder<Item, ZenithItem> TRUE_WOODEN_SWORD = ITEMS.register("true_wooden_sword", () ->
+		new ZenithItem(new Item.Properties()
+			.component(ZDataComponents.ZENITH_PARTS.get(), ZenithItem.createTrueWoodenSwordParts())
+			.rarity(Rarity.EPIC)
+			.stacksTo(1)));
 }

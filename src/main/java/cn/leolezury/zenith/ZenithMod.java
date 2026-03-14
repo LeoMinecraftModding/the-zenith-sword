@@ -5,12 +5,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 
 @Mod(ZenithMod.ID)
 public class ZenithMod {
 	public static final String ID = "zenith";
 
 	public ZenithMod(IEventBus modBus, ModContainer container) {
+		container.registerConfig(ModConfig.Type.STARTUP, ZConfig.SPEC);
 		ZDataComponents.DATA_COMPONENTS.register(modBus);
 		ZItems.ITEMS.register(modBus);
 		ZCreativeModeTabs.TABS.register(modBus);

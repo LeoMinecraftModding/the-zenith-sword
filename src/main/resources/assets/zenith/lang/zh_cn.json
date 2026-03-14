@@ -1,5 +1,8 @@
 {
   "name.zenith": "天顶剑",
   "item.zenith.zenith": "天顶剑",
-  "entity.zenith.zenith_slash": "天顶剑斩击"
+  "item.zenith.true_wooden_sword": "真木剑",
+  "entity.zenith.zenith_slash": "天顶剑斩击",
+  "zenith.configuration.zenithAttackDamageAddition": "天顶剑攻击伤害增数",
+  "zenith.configuration.zenithAttackDamageAddition.tooltip": "天顶剑攻击伤害属性修饰符的数值"
 }

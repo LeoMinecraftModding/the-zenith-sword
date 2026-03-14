@@ -1,5 +1,8 @@
 {
   "name.zenith": "The Zenith Sword",
   "item.zenith.zenith": "Zenith",
-  "entity.zenith.zenith_slash": "Zenith Slash"
+  "item.zenith.true_wooden_sword": "True Wooden Sword",
+  "entity.zenith.zenith_slash": "Zenith Slash",
+  "zenith.configuration.zenithAttackDamageAddition": "Zenith Attack Damage Addition",
+  "zenith.configuration.zenithAttackDamageAddition.tooltip": "Value of the Zenith's attack damage attribute modifier"
 }

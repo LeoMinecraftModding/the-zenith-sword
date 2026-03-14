@@ -1,12 +1,16 @@
 package cn.leolezury.zenith.item;
 
+import cn.leolezury.zenith.ZConfig;
 import cn.leolezury.zenith.registry.ZItems;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
@@ -24,7 +28,7 @@ public class ZenithItem extends Item {
 		return ItemAttributeModifiers.builder()
 			.add(
 				Attributes.ATTACK_DAMAGE,
-				new AttributeModifier(BASE_ATTACK_DAMAGE_ID, 7, AttributeModifier.Operation.ADD_VALUE),
+				new AttributeModifier(BASE_ATTACK_DAMAGE_ID, ZConfig.ZENITH_ATTACK_DAMAGE_ADDITION.get(), AttributeModifier.Operation.ADD_VALUE),
 				EquipmentSlotGroup.MAINHAND
 			)
 			.build();
@@ -42,8 +46,19 @@ public class ZenithItem extends Item {
 		);
 	}
 
+	public static List<ZenithPart> createTrueWoodenSwordParts() {
+		return List.of(
+			new ZenithPart(Items.WOODEN_SWORD.builtInRegistryHolder(), 0x594319, 0.125, Mth.HALF_PI * 0.5f, 1.75, 1)
+		);
+	}
+
 	@Override
 	public int getEnchantmentValue() {
 		return 25;
+	}
+
+	@Override
+	public boolean canBeHurtBy(ItemStack stack, DamageSource source) {
+		return source.is(DamageTypeTags.BYPASSES_INVULNERABILITY);
 	}
 }
