@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "zenith:true_wooden_sword"
+    }
+  ],
+  "result": {
+    "item": "zenith:zenith"
+  }
+}

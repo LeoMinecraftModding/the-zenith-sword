@@ -22,7 +22,8 @@ public class ZItemTagsProvider extends ItemTagsProvider {
 	protected void addTags(HolderLookup.Provider lookupProvider) {
 		tag(ItemTags.SWORDS)
 			.add(
-				ZItems.ZENITH.get()
+				ZItems.ZENITH.get(),
+				ZItems.TRUE_WOODEN_SWORD.get()
 			);
 	}
 

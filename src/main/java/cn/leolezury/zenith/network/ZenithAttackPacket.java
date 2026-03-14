@@ -4,7 +4,6 @@ import cn.leolezury.zenith.entity.ZenithSlash;
 import cn.leolezury.zenith.item.ZenithItem;
 import cn.leolezury.zenith.item.ZenithPart;
 import cn.leolezury.zenith.registry.ZEntityTypes;
-import cn.leolezury.zenith.registry.ZItems;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -27,7 +26,7 @@ public record ZenithAttackPacket(int playerId) {
 			Player player = context.get().getSender();
 			if (player != null
 				&& player.getId() == packet.playerId()
-				&& player.getMainHandItem().is(ZItems.ZENITH.get())
+				&& player.getMainHandItem().getItem() instanceof ZenithItem
 				&& !player.isUsingItem()) {
 				ZenithSlash slash = new ZenithSlash(ZEntityTypes.ZENITH_SLASH.get(), player.level(), player);
 				List<ZenithPart> parts = ZenithItem.getZenithParts(player.getMainHandItem());

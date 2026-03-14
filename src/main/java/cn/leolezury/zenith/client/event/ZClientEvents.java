@@ -1,9 +1,9 @@
 package cn.leolezury.zenith.client.event;
 
 import cn.leolezury.zenith.ZenithMod;
+import cn.leolezury.zenith.item.ZenithItem;
 import cn.leolezury.zenith.network.ZNetworkHandler;
 import cn.leolezury.zenith.network.ZenithAttackPacket;
-import cn.leolezury.zenith.registry.ZItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraftforge.api.distmarker.Dist;
@@ -25,7 +25,7 @@ public class ZClientEvents {
 			LocalPlayer player = Minecraft.getInstance().player;
 			if (isZenithAttacking()
 				&& player != null
-				&& player.getMainHandItem().is(ZItems.ZENITH.get())
+				&& player.getMainHandItem().getItem() instanceof ZenithItem
 				&& !player.isUsingItem()) {
 				ZNetworkHandler.INSTANCE.sendToServer(new ZenithAttackPacket(player.getId()));
 			}

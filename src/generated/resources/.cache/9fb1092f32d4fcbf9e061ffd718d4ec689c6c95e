@@ -1,3 +1,7 @@
-// 1.20.1	2026-01-10T18:51:04.99293	Recipes
+// 1.20.1	2026-01-29T19:25:15.1034839	Recipes
+47c26e6dcfc0f4fff11145b894785f8a10627295 data/zenith/advancements/recipes/combat/true_wooden_sword.json
 7b063a026b0183c8e65d7978cb7923fb6b27f06a data/zenith/advancements/recipes/combat/zenith.json
+1d5214b7668d3c43edb4336ea1dc126fd2d5104f data/zenith/advancements/recipes/combat/zenith_from_true_wooden_sword.json
+5e89e41bb416dffb513cd8f6eedfd32c5353159f data/zenith/recipes/true_wooden_sword.json
 06edff353cf8f480365227b8323a3ffb4a8c8434 data/zenith/recipes/zenith.json
+096aecf6f153e673dff002c8db7cf295a9bc5632 data/zenith/recipes/zenith_from_true_wooden_sword.json

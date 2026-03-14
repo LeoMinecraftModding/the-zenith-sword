@@ -1,6 +1,7 @@
 package cn.leolezury.zenith.datagen;
 
 import cn.leolezury.zenith.ZenithMod;
+import cn.leolezury.zenith.datagen.model.ZItemModelProvider;
 import cn.leolezury.zenith.datagen.tags.ZBlockTagsProvider;
 import cn.leolezury.zenith.datagen.tags.ZItemTagsProvider;
 import net.minecraft.core.HolderLookup;
@@ -21,6 +22,8 @@ public class DataGenerators {
 		PackOutput output = generator.getPackOutput();
 		CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 		ExistingFileHelper helper = event.getExistingFileHelper();
+
+		generator.addProvider(event.includeClient(), new ZItemModelProvider(output, helper));
 
 		ZBlockTagsProvider blockTags = new ZBlockTagsProvider(output, lookupProvider, helper);
 		generator.addProvider(event.includeServer(), blockTags);

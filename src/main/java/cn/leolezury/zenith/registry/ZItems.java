@@ -15,4 +15,9 @@ public class ZItems {
 		new ZenithItem(new Item.Properties()
 			.rarity(Rarity.EPIC)
 			.stacksTo(1)));
+
+	public static final RegistryObject<ZenithItem> TRUE_WOODEN_SWORD = ITEMS.register("true_wooden_sword", () ->
+		new ZenithItem(new Item.Properties()
+			.rarity(Rarity.EPIC)
+			.stacksTo(1)));
 }

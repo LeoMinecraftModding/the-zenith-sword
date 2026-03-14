@@ -7,6 +7,7 @@ import cn.leolezury.zenith.registry.ZItems;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(ZenithMod.ID)
@@ -14,6 +15,7 @@ public class ZenithMod {
 	public static final String ID = "zenith";
 
 	public ZenithMod(FMLJavaModLoadingContext context) {
+		context.registerConfig(ModConfig.Type.COMMON, ZConfig.SPEC);
 		IEventBus modBus = context.getModEventBus();
 		ZItems.ITEMS.register(modBus);
 		ZCreativeModeTabs.TABS.register(modBus);

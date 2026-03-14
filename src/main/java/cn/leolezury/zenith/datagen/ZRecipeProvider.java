@@ -1,5 +1,6 @@
 package cn.leolezury.zenith.datagen;
 
+import cn.leolezury.zenith.ZenithMod;
 import cn.leolezury.zenith.registry.ZItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -31,5 +32,15 @@ public class ZRecipeProvider extends RecipeProvider {
 			.unlockedBy(getHasName(Items.NETHER_STAR), has(Items.NETHER_STAR))
 			.unlockedBy(getHasName(Items.DRAGON_BREATH), has(Items.DRAGON_BREATH))
 			.save(recipeOutput);
+
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, ZItems.TRUE_WOODEN_SWORD.get())
+			.requires(ZItems.ZENITH.get())
+			.unlockedBy(getHasName(ZItems.ZENITH.get()), has(ZItems.ZENITH.get()))
+			.save(recipeOutput);
+
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, ZItems.ZENITH.get())
+			.requires(ZItems.TRUE_WOODEN_SWORD.get())
+			.unlockedBy(getHasName(ZItems.TRUE_WOODEN_SWORD.get()), has(ZItems.TRUE_WOODEN_SWORD.get()))
+			.save(recipeOutput, ZenithMod.id("zenith_from_true_wooden_sword"));
 	}
 }
